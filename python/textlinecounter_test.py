@@ -23,6 +23,9 @@ class TestGlobalFunctions(unittest.TestCase):
 	def test_count_lines_in_file(self):
 		self.assertEqual(10, textlinecounter.count_lines_in_file('data_test/utf8_01.txt'))
 		pass
+		
+	def test_(self):
+		pass
 	
 		
 if __name__ == '__main__':

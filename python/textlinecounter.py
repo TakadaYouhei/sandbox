@@ -24,3 +24,4 @@ def count_lines_in_file(filepath):
 		result = count_lines_in_text(text)
 	
 	return result
+	
