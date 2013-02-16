@@ -19,9 +19,24 @@ def count_lines_in_file(filepath):
 	'''
 	result = 0
 	
-	with open(filepath, 'r', encoding='utf-8') as fp:
-		text = fp.read()
-		result = count_lines_in_text(text)
+	# utf-8
+	try:
+		with open(filepath, 'r', encoding='utf-8') as fp:
+			text = fp.read()
+			result = count_lines_in_text(text)
+		
+		return result
+	except Exception as ext:
+		pass
+		
+	# shift_jis
+	try:
+		with open(filepath, 'r', encoding='Shift_JIS') as fp:
+			text = fp.read()
+			result = count_lines_in_text(text)
+		
+		return result
+	except Exception as ext:
+		pass
 	
-	return result
-	
+	return 0	
