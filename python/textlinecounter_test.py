@@ -25,7 +25,8 @@ class TestGlobalFunctions(unittest.TestCase):
 		self.assertEqual(10, textlinecounter.count_lines_in_file('data_test/shift_jis_01.txt'))
 		pass
 		
-	def test_(self):
+	def test_count_lines_of_diff_files(self):
+		self.assertEqual(3, textlinecounter.count_lines_of_diff_files('data_test/utf8_01.txt', 'data_test/utf8_02.txt'))
 		pass
 	
 		
