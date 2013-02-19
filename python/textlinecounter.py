@@ -66,7 +66,6 @@ def count_lines_of_diff_files(filepath1, filepath2):
 		while True:
 			# @@ を探す
 			line = itr.__next__()
-			print(str.format('1[{0}]', line))
 			while True:
 				if len(line) >= 2:
 					if line[0] == '@' and line[1] == '@':
@@ -74,12 +73,10 @@ def count_lines_of_diff_files(filepath1, filepath2):
 						line = itr.__next__()
 						break
 				line = itr.__next__()
-				print(str.format('2[{0}]', line))
 			
 			# 先頭が '-' か '+' の物が変更のあった所
 			while True: 
 				if len(line) >= 1:
-					print(str.format('4[{0}]', line))
 					if line[0] == '-' or line[0] == '+':
 						result = result + 1
 					elif len(line) >= 2:
@@ -88,7 +85,6 @@ def count_lines_of_diff_files(filepath1, filepath2):
 							# 次
 							break
 				line = itr.__next__()
-				print(str.format('3[{0}]', line))
 	except StopIteration as ext:
 		pass
 		
