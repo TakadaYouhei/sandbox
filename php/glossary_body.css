@@ -1,0 +1,123 @@
+/* utf-8 */
+* {
+  margin:0;
+  padding:0;
+}
+
+body {
+	margin: 0;
+	color: #333;
+	text-align: center;
+	background-color: #FDFDFD;
+	background-position: top;
+	background-repeat: repeat-x;
+}
+
+/* 外枠 */
+#page {
+	width: 950px;
+	margin: 0px auto;
+	text-align: left;
+}
+
+/* ヘッダー */
+#header {
+	height: 75px;
+	margin: 0px;
+	border-top: 1px solid #FFFFFF;
+	color: #FFFFFF;
+}
+
+#sitename {
+	margin: 30px 0px 0px;
+	font-size: 24px;
+	font-weight: bold;
+	color: #666666;
+}
+
+/* ======================================== #contents 画面中央部 #mainとサイドメニューの外枠 */
+#contents{
+	padding: 30px 0px 20px;
+	margin: 0px;
+}
+
+
+
+/* ========================================  #main ページの本文 */
+#main {
+	float: left;
+	width: 500px;
+	margin: 0px 0px 20px;
+}
+
+#main h1 {
+	padding: 0px;
+	margin: 0px;
+	color: #0B7A8E;
+}
+
+
+
+#main h2 {
+	clear: both;
+	padding: 3px 0px 3px 5px;
+	margin: 2em 0px 1em;
+	border-left: 10px solid #F4CC0B;
+	font-size: 120%;
+	background-color: #F6F6F6;
+}
+
+
+#main h3 {
+	margin: 0px 0px 0.5em 3px;
+	font-size: 100%;
+	color: #336699;
+}
+
+/* ========================================  menuL 左サイドメニュー */
+#menuL {
+	float: left;
+	width: 200px;
+	margin: 0px 20px 20px 0px;
+	background-color: #F6F6F6;
+}
+
+#menuL p{
+	margin-right: 1em;
+	margin-left: 1em;
+}
+
+#menuL h3{
+	padding: 7px 5px 5px 10px;
+	margin: 0px 0px 10px;
+	border-left: 10px solid #F4CC0B;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #0B7A8E;
+}
+
+
+/* ========================================  menuL 右サイドメニュー */
+#menuR {
+	float: right;
+	width: 200px;
+	margin: 0px 0px 20px;
+	background-color: #F6F6F6;
+}
+
+
+#menuR p{
+	margin-right: 1em;
+	margin-left: 1em;
+}
+
+
+#menuR h3{
+	padding: 7px 5px 5px 10px;
+	margin: 0px 0px 10px;
+	border-left: 10px solid #F4CC0B;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #0B7A8E;
+}
+
