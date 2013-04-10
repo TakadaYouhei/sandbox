@@ -27,15 +27,15 @@
 
 << テーブル定義 >>
 
-■要望
-要望ID　数字
-大分類　テキスト
-中分類　テキスト
-小分類　テキスト
-要望内容　テキスト
-要望理由　テキスト
+■要望 tbl_request
+要望ID id_request　数字
+大分類　category_a テキスト
+中分類　category_b テキスト
+小分類　category_c テキスト
+要望内容　description テキスト
+要望理由　reason テキスト
 
-■追加・変更仕様
+■追加・変更仕様 tbl_spec
 要望ID　数字
 追加・変更仕様ID　数字
 カテゴリ　テキスト
