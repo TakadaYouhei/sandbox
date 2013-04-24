@@ -10,17 +10,17 @@ function create_tables()
 	// 成果物データテーブル
 	$sql_create1 = <<<EOD
 		CREATE TABLE IF NOT EXISTS tbl_deli_data (
-			id MEDIUMINT NOT NULL AUTO_INCREMENT,	-- データを一意に識別するためのID。親子や関連を定義する際に参照
-			id_parent INT DEFAULT NULL,				-- 親のID
-			update_time DATETIME NOT NULL,			-- このレコードの更新日時
-			type_text     CHAR(32) DEFAULT 'data',	-- 種類。成果物'data' プロセス'process'
-			group_text    CHAR(256),				-- グループ化とかしたくなる ?
-			brief       TEXT,						-- 概要
-			detail      TEXT,						-- 詳細
+			id INT NOT NULL AUTO_INCREMENT,	/* データを一意に識別するためのID。親子や関連を定義する際に参照 */
+			id_parent INT DEFAULT NULL,				/* 親のID */
+			update_time DATETIME NOT NULL,			/* このレコードの更新日時 */
+			type_text     CHAR(32) DEFAULT 'data',	/* 種類。成果物'data' プロセス'process' */
+			group_text    CHAR(256),				/* グループ化とかしたくなる ? */
+			brief       TEXT,						/* 概要 */
+			detail      TEXT,						/* 詳細 */
 			
 			PRIMARY KEY(id)
 		);
-	EOD;
+EOD;
 	
 	// tbl_deli_Relation
 	// 成果物 関連 テー物
@@ -28,17 +28,20 @@ function create_tables()
 		CREATE TABLE IF NOT EXISTS tbl_deli_relation (
 			id_source INT NOT NULL,					-- 関連の元。流れの厳選
 			id_destinate INT NOT NULL,				-- 関連の先。流れる先
-			update_time DATETIME NOT NULL,			-- このレコードの更新日時
+			update_time DATETIME NOT NULL			-- このレコードの更新日時
 		);
-	EOD;
+EOD;
 	
 	try {
 		// MySQLサーバへ接続
 		$pdo = new_PDO();
 	
 		// 作る
+print($sql_create1);
 		$stmt = $pdo->prepare($sql_create1);
-		$ret = $stmt->execute();
+print("b");
+		$ret = $stmt->execute(array());
+print("c");
 		if (!$ret)
 		{
 			show_pdo_error($stmt);
@@ -62,8 +65,7 @@ function create_tables()
 
 create_tables();
 
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
