@@ -62,7 +62,8 @@ function create_tables()
 
 create_tables();
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
@@ -74,3 +75,4 @@ create_tables();
 </p>
 </body>
 </html>
+
