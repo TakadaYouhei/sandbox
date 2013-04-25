@@ -8,15 +8,22 @@ function create_tables()
 {
 	// tbl_deli_data
 	// 成果物データテーブル
+	/* データを一意に識別するためのID。親子や関連を定義する際に参照 */
+	/* 親のID */
+	/* このレコードの更新日時 */
+	/* 種類。成果物'data' プロセス'process' */
+	/* グループ化とかしたくなる ? */
+	/* 概要 */
+	/* 詳細 */
 	$sql_create1 = <<<EOD
 		CREATE TABLE IF NOT EXISTS tbl_deli_data (
-			id INT NOT NULL AUTO_INCREMENT,	/* データを一意に識別するためのID。親子や関連を定義する際に参照 */
-			id_parent INT DEFAULT NULL,				/* 親のID */
-			update_time DATETIME NOT NULL,			/* このレコードの更新日時 */
-			type_text     CHAR(32) DEFAULT 'data',	/* 種類。成果物'data' プロセス'process' */
-			group_text    CHAR(256),				/* グループ化とかしたくなる ? */
-			brief       TEXT,						/* 概要 */
-			detail      TEXT,						/* 詳細 */
+			id INT NOT NULL AUTO_INCREMENT,	
+			id_parent INT DEFAULT NULL,				
+			update_time DATETIME NOT NULL,			
+			type_text     CHAR(32) DEFAULT 'data',	
+			group_text    CHAR(255),				
+			brief       TEXT,						
+			detail      TEXT,						
 			
 			PRIMARY KEY(id)
 		);
@@ -26,9 +33,12 @@ EOD;
 	// 成果物 関連 テー物
 	$sql_create2 = <<<EOD
 		CREATE TABLE IF NOT EXISTS tbl_deli_relation (
+			rel_id INT NOT NULL AUTO_INCREMENT,
 			id_source INT NOT NULL,					-- 関連の元。流れの厳選
 			id_destinate INT NOT NULL,				-- 関連の先。流れる先
-			update_time DATETIME NOT NULL			-- このレコードの更新日時
+			update_time DATETIME NOT NULL,			-- このレコードの更新日時
+
+			PRIMARY KEY(rel_id)
 		);
 EOD;
 	
@@ -37,11 +47,8 @@ EOD;
 		$pdo = new_PDO();
 	
 		// 作る
-print($sql_create1);
 		$stmt = $pdo->prepare($sql_create1);
-print("b");
 		$ret = $stmt->execute(array());
-print("c");
 		if (!$ret)
 		{
 			show_pdo_error($stmt);
