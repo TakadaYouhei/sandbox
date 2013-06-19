@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>検索入力</title>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+  article, aside, dialog, figure, footer, header,
+  hgroup, menu, nav, section { display: block; }
+  #search_word { width: 50% }
+  
+</style>
+</head>
+<body>
+  <header>
+    <p>検索したいワードを入力して</p>
+  </header>
+<!--
+  <nav>
+    navi
+  </nav>
+-->
+  <!-- メインコンテンツ -->
+  <div>
+    <form method="get" action="./search.php">
+      <input id="search_word" type="text" name="words" />
+      <input type="submit" value="検索" />
+    </form>
+  </div>
+  <footer>
+    <p>presented by t</p>
+  </footer>
+</body>
+</html>
