@@ -33,13 +33,8 @@ UPDATE `test`.`master_data`
 ;
 EDO;
 
-if ($argc <= 1)
+function insert_from_files($inpath)
 {
-	print('USAGE : php insert_from_files.php inpath\n');
-	exit(1);
-}
-
-$inpath = $argv[1];
 
 try {
 	// MySQLサーバへ接続
@@ -101,6 +96,8 @@ try {
 		
 		// 挿入失敗したら
 
+		// TODO : ハッシュ値を比較して、更新が必要か判定する
+
 		// SQL 更新
 		$ret = $stmt_update->execute(
 						array(
@@ -128,5 +125,19 @@ try {
 
 // 切断
 $pdo = null;
+}
+
+
+//------------------------------------
+
+if ($argc <= 1)
+{
+	print('USAGE : php insert_from_files.php inpath\n');
+	exit(1);
+}
+
+$inpath = $argv[1];
+insert_from_files( $inpath );
+
 
 ?>

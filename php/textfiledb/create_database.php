@@ -16,6 +16,7 @@ function create_database()
 	// detail ... ファイルの内容
 	// lastupdate .... 最終更新日
 	// revision .... 更新に絡む情報
+	// hash .... sha1 の 40文字の文字列
 	$sql_create = <<<EOD
 CREATE TABLE IF NOT EXISTS master_data (
 	filename    CHAR(255) DEFAULT 'no name',
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS master_data (
 	detail      LONGTEXT  DEFAULT '',
 	lastupdate  DATETIME  DEFAULT '2000-01-01 00:00:00',
 	revision    TEXT      DEFAULT '',
+	hash        CHAR(40)  DEFAULT '',
 	
 	PRIMARY KEY(filename)
 );
