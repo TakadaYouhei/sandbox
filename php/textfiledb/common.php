@@ -42,4 +42,11 @@ function show_pdo_error($stmt) {
 	
 	exit(-1);
 }
+
+/// 拡張子を返す
+function get_file_ext($filename) {
+	$ext = substr($filename, strrpos($filename, '.') + 1);
+	return $ext;
+}
+
 ?>
