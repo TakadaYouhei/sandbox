@@ -56,7 +56,7 @@ try {
 					'/(\/\/.+)$/m',
 				);
 	$replace = array (
-					'<span id="${1}" />%${1}',
+					'<a name="${1}" />%${1}',
 					'<a href="view.php?filename=${1}#${1}">%${1}</a>${2}',
 					'<a href="view.php?filename=${1}#${1}_${2}">%${1}_${2}</a>',
 					'<span style="color: green; margin-top: 0; margin-bottom: 0;">${1}</span>',
