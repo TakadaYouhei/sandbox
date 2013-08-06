@@ -8,6 +8,9 @@
 // 共通処理を別ファイルに分離
 require_once(dirname(__FILE__) . '/common.php');
 
+// 参照する他のモジュール
+require_once(dirname(__FILE__) . '/csv_record_info.php');
+
 // filename ... ファイル名 (含む拡張子) ex: 'sample.txt'
 // fileext ... ファイルの拡張子。 '.' は含まない。 ex: 'txt', 'csv'
 // folderpath ... ファイルが置かれているパス
@@ -64,19 +67,36 @@ function insert_from_files($inpath)
 		
 		foreach(glob($inpath) as $filepath)
 		{
+			// db に登録する情報
+			// ・ヘッダ情報
+			// ・レコード情報
+			// ・生データ
+			
+			// 生データ
 			$data = file_get_contents($filepath);
 			if ($data == FALSE)
 			{
-				continue;
+				//continue;
 			}
 			
-			// DB に登録する他の情報を取得
+			// ヘッダ に登録するヘッダ情報
 			$filename = basename($filepath);
 			$dirname = dirname($filepath);
 			$fileext = get_file_ext($filename);
 			$lastupdate = date('Y-m-d H:i:s', filemtime($filepath));	// ex) 1999-11-11 23:59:59
 			$revision = '';
 			$hash = sha1($data);
+			
+			
+			// csv ファイルを読み込んでその他のヘッダ情報を収集
+			$header_add = array();
+			$fp = fopen($filepath, "r");
+			while (($data = fgetcsv($fp, 0, ",")) !== FALSE) {
+				// csv から 1 行ずつ読みこんで $data に配列として格納
+				
+			}
+			fclose($fp);
+ 
 			
 			// ファイルの内容確認
 			//print ($filepath . "\n");
