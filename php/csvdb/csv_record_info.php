@@ -42,7 +42,7 @@ function get_header_column_name_csv_record($in_csv_record)
 	
 	$result = $g_csv_record_headers[$record_type_str];
 	
-	return $result;
+	return $result;ta
 }
 
 ?>
