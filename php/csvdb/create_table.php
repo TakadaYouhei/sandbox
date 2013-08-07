@@ -11,12 +11,17 @@ function create_table()
 {
 
 	// ヘッダ情報のテーブル作成
+	//
+	// hash 生データのハッシュ(sha1)。２重登録防止に使用
+	// plane_data csv ファイル生データ
 	$sql_create_head = <<<EOD
 CREATE TABLE IF NOT EXISTS csv_head (
     id          INT NOT NULL AUTO_INCREMENT,
 	filename    CHAR(255) DEFAULT 'no name',
 	folderpath  CHAR(255) DEFAULT '.',
 	regist_date DATETIME  DEFAULT '2000-01-01 00:00:00',
+	hash        CHAR(40)  DEFAULT NULL UNIQUE,
+	plane_data  LONGTEXT  DEFAULT '',
 	csv_head1   CHAR(255) DEFAULT '',
 	csv_head2   CHAR(255) DEFAULT '',
 	csv_head3   CHAR(255) DEFAULT '',
