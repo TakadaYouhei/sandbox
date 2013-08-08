@@ -75,6 +75,7 @@ function insert_from_files($inpath)
 		// 検索
 		$filelist = glob($inpath);
 		
+		// ファイル毎に処理
 		foreach(glob($inpath) as $filepath)
 		{
 			// db に登録する情報
@@ -190,22 +191,41 @@ function insert_from_files($inpath)
 			$fp = fopen($filepath, "r");
 			while (($data = fgetcsv($fp, 0, ",")) !== FALSE) 
 			{
-				todo
+				$record_date = '2013-01-02 14:23:11';	// フォーマットは 'Y-m-d H:i:s'
+				$in_parameters = array (
+									':v_ref_id_head' => $header_id, 
+									':v_record_date' => $record_date,
+									':v_csv_data01' => $data[1],
+									':v_csv_data02' => $data[2],
+									':v_csv_data03' => $data[3],
+									':v_csv_data04' => $data[4],
+									':v_csv_data05' => $data[5],
+									':v_csv_data06' => $data[6],
+									':v_csv_data07' => $data[7],
+									':v_csv_data08' => $data[8],
+									':v_csv_data09' => $data[9],
+									':v_csv_data10' => $data[10],
+									':v_csv_data11' => $data[11],
+									':v_csv_data12' => $data[12],
+									':v_csv_data13' => $data[13],
+									':v_csv_data14' => $data[14],
+									':v_csv_data15' => $data[15],
+									':v_csv_data16' => $data[16],
+									':v_csv_data17' => $data[17],
+									':v_csv_data18' => $data[18],
+									':v_csv_data19' => $data[19],
+									':v_csv_data20' => $data[20]
+									);
+				$ret = $stmt_insert_record->execute($in_parameters);
+				if (!$ret)
+				{
+					print ("ERROR : insert record failed. \n");	// 挿入失敗
+				}
 			}
-			
-			// SQL 更新
-			$ret = $stmt_update->execute($in_parameters);
+			fclose($fp);
 
-			if (!$ret)
-			{
-				print ("SQL ERROR:{$sql_update}\n");	// プログラム何かミスった？
-				break;
-			}
-			if ($stmt_update->rowCount() > 0)
-			{
-				print ("update [" . $filename . "]\n");
-			}
-		}
+			// csv レコードの登録完了			
+		}		// end of foreach()
 		
 	} catch(PDOException $e){
 		echo 'exception!!';
