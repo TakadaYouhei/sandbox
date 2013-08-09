@@ -17,7 +17,7 @@ ini_set('mbstring.detect_order', 'SJIS,EUC-JP,JIS,UTF-8,ASCII');
 function new_PDO() {
 	$mysql_host = "localhost";
 	$mysql_port = "8889";
-	$mysql_db = "textfileviewdb";
+	$mysql_db = "test";
 	$mysql_username = "root";
 	$mysql_password = "root";
 

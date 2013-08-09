@@ -2,8 +2,9 @@
 // test
 // @file insert_from_files.php
 // @brief フォルダをパースしてデータベースにデータを挿入する (コマンドラインツール)
-// 実行方法
-//   /Applications/MAMP/bin/php5.3/bin/php insert_from_files.php folderpath
+// 実行例
+//
+//   /Applications/MAMP/bin/php5.3/bin/php insert_from_files.php testdata/**/*.csv
 
 // 共通処理を別ファイルに分離
 require_once(dirname(__FILE__) . '/common.php');
@@ -34,7 +35,7 @@ EOD;
 // 生データの sha1 で検索してヒットするかどうかでチェック(すれば ok ?)
 $sql_exists_record = <<<EOD
 SELECT * FROM $tbl_header_name WHERE EXIST (
-		SELECT * FROM tbl_header_name
+		SELECT * FROM $tbl_header_name
 		WHERE `hash` = :v_hash
 	)
 ;
@@ -56,10 +57,22 @@ INSERT INTO $tbl_record_name
 ;
 EDO;
 
+/// csv の指定のデータを返す。
+/// データが無いときは NULL を返す
+/// @param[in] $csv_record 配列
+function get_csvdata($csv_record)
+{
+	todo
+}
+
 /// @brief フォルダ以下にあるファイルを DB に登録する。既に登録済みなら、更新する。
 /// @in $inpath 検索を開始するルートフォルダのパス
 function insert_from_files($inpath)
 {
+	global $sql_insert_header;
+	global $sql_exists_record;
+	global $sql_insert_record;
+	
 	try {
 		// MySQLサーバへ接続
 		$pdo = new_PDO();
@@ -68,7 +81,7 @@ function insert_from_files($inpath)
 		$pdo->query("SET NAMES utf8;");
 		
 		$stmt_insert_header = $pdo->prepare($sql_insert_header);
-		$stmt_insert_record = $pdo->prepare($sql_update);
+		$stmt_insert_record = $pdo->prepare($sql_insert_record);
 		$stmt_exist = $pdo->prepare($sql_exists_record);
 		
 		
@@ -83,11 +96,13 @@ function insert_from_files($inpath)
 			// ・生データ
 			// ・レコード情報
 			
+			print("$filepath\n");
+			
 			// 生データ
 			$plane_data = file_get_contents($filepath);
 			if ($plane_data == FALSE)
 			{
-				print('ERROR : [' . $filepath . '] error?\n');
+				print('ERROR : [' . $filepath . "] error?\n");
 				continue;
 			}
 			
@@ -195,7 +210,7 @@ function insert_from_files($inpath)
 				$in_parameters = array (
 									':v_ref_id_head' => $header_id, 
 									':v_record_date' => $record_date,
-									':v_csv_data01' => $data[1],
+									':v_csv_data01' => get_csvdata($data, 1),
 									':v_csv_data02' => $data[2],
 									':v_csv_data03' => $data[3],
 									':v_csv_data04' => $data[4],
