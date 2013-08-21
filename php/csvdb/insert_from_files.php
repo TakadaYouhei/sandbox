@@ -34,9 +34,9 @@ EOD;
 // 既に登録済みのファイルかどうかを判定するのに使用。
 // 生データの sha1 で検索してヒットするかどうかでチェック(すれば ok ?)
 $sql_exists_record = <<<EOD
-SELECT * FROM $tbl_header_name WHERE EXIST (
+SELECT * FROM $tbl_header_name WHERE EXISTS (
 		SELECT * FROM $tbl_header_name
-		WHERE `hash` = :v_hash
+		WHERE $tbl_header_name.`hash` = :v_hash
 	)
 ;
 EOD;
@@ -60,9 +60,17 @@ EDO;
 /// csv の指定のデータを返す。
 /// データが無いときは NULL を返す
 /// @param[in] $csv_record 配列
-function get_csvdata($csv_record)
+/// @param[in] $at 配列の何番目のデータを参照するのか
+function get_csvdata($csv_record, $at)
 {
-	todo
+	if (array_key_exists($at, $csv_record))
+	{
+		return $csv_record[$at];
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 /// @brief フォルダ以下にあるファイルを DB に登録する。既に登録済みなら、更新する。
@@ -110,7 +118,7 @@ function insert_from_files($inpath)
 			$filename = basename($filepath);
 			$dirname = dirname($filepath);
 			$file_datetime = date('Y-m-d H:i:s', filemtime($filepath));	// ex) 1999-11-11 23:59:59
-			$hash = sha1($data);
+			$hash = sha1($plane_data);
 			$regist_datetime = date('Y-m-d H:i:s', time());		// 今の時間 = 登録時間
 			
 			//
@@ -123,7 +131,14 @@ function insert_from_files($inpath)
 								':v_hash' => $hash
 								)
 							);
-			if ($ret)
+			if (!$ret)
+			{
+				// 何かプログラムを間違えた ?
+				print ("CRITICAL ERROR! $stmt_exist->execute() error.\n");
+				continue;
+			}
+			$ret = $stmt_exist->fetch();
+			if ($ret > 0)
 			{
 				// ヒットした = 既に登録ズミなので無視
 				print ("still registed [" . $filename . "]\n");
@@ -181,7 +196,7 @@ function insert_from_files($inpath)
 								':v_csv_head3' => '',
 								':v_csv_head4' => ''
 								);
-			foreach ($header_appen as $key => $value)
+			foreach ($header_append as $key => $value)
 			{
 				$in_parameters[':v_' . $key] = $value;
 			}
@@ -206,30 +221,41 @@ function insert_from_files($inpath)
 			$fp = fopen($filepath, "r");
 			while (($data = fgetcsv($fp, 0, ",")) !== FALSE) 
 			{
+				if (!array_key_exists(0, $data))
+				{
+					// 最初のカラムが無い => 終端で良いかな ?
+					// 空行は無い想定。あるとしたら、最終行だけかな?
+					break;
+				}
+				
+				// 最初のカラムは日時
+				// => MYSQL の形式に変換　（フォーマットは 'Y-m-d H:i:s'）
 				$record_date = '2013-01-02 14:23:11';	// フォーマットは 'Y-m-d H:i:s'
+				
+				// ２t目以降は普通にデータとして記録
 				$in_parameters = array (
 									':v_ref_id_head' => $header_id, 
 									':v_record_date' => $record_date,
 									':v_csv_data01' => get_csvdata($data, 1),
-									':v_csv_data02' => $data[2],
-									':v_csv_data03' => $data[3],
-									':v_csv_data04' => $data[4],
-									':v_csv_data05' => $data[5],
-									':v_csv_data06' => $data[6],
-									':v_csv_data07' => $data[7],
-									':v_csv_data08' => $data[8],
-									':v_csv_data09' => $data[9],
-									':v_csv_data10' => $data[10],
-									':v_csv_data11' => $data[11],
-									':v_csv_data12' => $data[12],
-									':v_csv_data13' => $data[13],
-									':v_csv_data14' => $data[14],
-									':v_csv_data15' => $data[15],
-									':v_csv_data16' => $data[16],
-									':v_csv_data17' => $data[17],
-									':v_csv_data18' => $data[18],
-									':v_csv_data19' => $data[19],
-									':v_csv_data20' => $data[20]
+									':v_csv_data02' => get_csvdata($data, 2),
+									':v_csv_data03' => get_csvdata($data, 3),
+									':v_csv_data04' => get_csvdata($data, 4),
+									':v_csv_data05' => get_csvdata($data, 5),
+									':v_csv_data06' => get_csvdata($data, 6),
+									':v_csv_data07' => get_csvdata($data, 7),
+									':v_csv_data08' => get_csvdata($data, 8),
+									':v_csv_data09' => get_csvdata($data, 9),
+									':v_csv_data10' => get_csvdata($data, 10),
+									':v_csv_data11' => get_csvdata($data, 11),
+									':v_csv_data12' => get_csvdata($data, 12),
+									':v_csv_data13' => get_csvdata($data, 13),
+									':v_csv_data14' => get_csvdata($data, 14),
+									':v_csv_data15' => get_csvdata($data, 15),
+									':v_csv_data16' => get_csvdata($data, 16),
+									':v_csv_data17' => get_csvdata($data, 17),
+									':v_csv_data18' => get_csvdata($data, 18),
+									':v_csv_data19' => get_csvdata($data, 19),
+									':v_csv_data20' => get_csvdata($data, 20)
 									);
 				$ret = $stmt_insert_record->execute($in_parameters);
 				if (!$ret)
