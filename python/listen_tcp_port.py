@@ -35,10 +35,21 @@ def main():
                     break
                 print(f'Received: {data.decode()}')
 
+def loop():
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        print('KeyboardInterrupt')
+        exit(0)
+    except Exception as e:
+        print(f'Error: {e}')
+        exit(1)
+
 if __name__ == '__main__':
     # メイン処理を別スレッドで実行する
     thread = threading.Thread(target=main, daemon=True)
     thread.start()
 
     # スレッドの終了を待つ
-    thread.join()
+    loop()
