@@ -18,7 +18,8 @@ def main():
         usage()
 
     port = int(sys.argv[1])
-    host = 'localhost'
+    #host = 'localhost'
+    host = ''
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((host, port))
