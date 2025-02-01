@@ -35,9 +35,10 @@ def main():
                     break
                 print(f'Received: {data.decode()}')
 
-def loop():
+def loop(thread):
     try:
-        while True:
+        while thread.is_alive():
+            thread.join(0.1)
             pass
     except KeyboardInterrupt:
         print('KeyboardInterrupt')
@@ -45,6 +46,8 @@ def loop():
     except Exception as e:
         print(f'Error: {e}')
         exit(1)
+    
+    print('thread is ended.')
 
 if __name__ == '__main__':
     # メイン処理を別スレッドで実行する
@@ -52,4 +55,4 @@ if __name__ == '__main__':
     thread.start()
 
     # スレッドの終了を待つ
-    loop()
+    loop(thread)
