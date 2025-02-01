@@ -5,6 +5,7 @@
 
 import sys
 import socket
+import threading
 
 # 使い方
 # python3 listen_tcp_port.py 8080
@@ -35,4 +36,9 @@ def main():
                 print(f'Received: {data.decode()}')
 
 if __name__ == '__main__':
-    main()
+    # メイン処理を別スレッドで実行する
+    thread = threading.Thread(target=main, daemon=True)
+    thread.start()
+
+    # スレッドの終了を待つ
+    thread.join()
